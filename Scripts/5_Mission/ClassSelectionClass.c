@@ -189,7 +189,7 @@ class ClassSelectionClass {
 		
 	void SetClothes(JsonClassClothing classData, PlayerBase player)
 	{
-		// Removed manual deletion of EntityInHands to prevent crash in RemoveAllItems
+		// FIX: Removed GetGame().ObjectDelete() to prevent Runtime Error in RemoveAllItems
 		player.RemoveAllItems();
 		
 		player.GetInventory().CreateInInventory(classData.top);
@@ -306,6 +306,13 @@ class ClassSelectionClass {
 						}
 					
 						weaponBase.UpdateAnimationState(has_bullet, has_mag, animationIndex);
+						
+						// FEATURE: Set weapon to Full Auto (or last available mode)
+						int mode_count = weaponBase.GetModeCount(mi);
+						if (mode_count > 1)
+						{
+							weaponBase.SetCurrentMode(mi, mode_count - 1);
+						}
 				
 						if(GetGame().IsMultiplayer())
 				        {
