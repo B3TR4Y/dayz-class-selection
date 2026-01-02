@@ -28,7 +28,7 @@ class ClassMenu extends UIScriptedMenu {
 	}
 	
 	override Widget Init() {
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets( "d3xters-class-selection\\Scripts\\5_Mission\\layouts\\menu.layout" );
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets( "ClassSelect\\Scripts\\5_Mission\\layouts\\menu.layout" );
 		return layoutRoot;
 	}
 	
@@ -81,7 +81,7 @@ class ClassMenu extends UIScriptedMenu {
 		float startY = containerH * 0.16;
 		
 		ClassData classData = null;
-		ref Widget classFrame  = GetGame().GetWorkspace().CreateWidgets( "d3xters-class-selection\\Scripts\\5_Mission\\layouts\\class.layout", layoutRoot);
+		ref Widget classFrame  = GetGame().GetWorkspace().CreateWidgets( "ClassSelect\\Scripts\\5_Mission\\layouts\\class.layout", layoutRoot);
 		classFrame.GetScript(classData);
 		classFrame.GetSize(frameW, frameH);
 	
