@@ -2,7 +2,7 @@ modded class MissionGameplay {
 	
 	ref ClassMenu m_ClassMenu;
 	ref array<ref JsonClassData> m_AvailableClasses;
-	ref JsonConfig m_Config;
+	ref JsonConfig m_ClassSelectionConfig;
 
 	void MissionGameplay()
 	{
@@ -15,8 +15,8 @@ modded class MissionGameplay {
 		super.OnKeyPress(key);
 	
 		switch ( key ) {
-			case ClassSelectionUtils.StringToKeyCode(m_Config.keyToOpen):
-				if(!m_Config.showClassSelectOnRespawnOnly) GetClassMenu().Toggle();
+			case ClassSelectionUtils.StringToKeyCode(m_ClassSelectionConfig.keyToOpen):
+				if(!m_ClassSelectionConfig.showClassSelectOnRespawnOnly) GetClassMenu().Toggle();
 			break;
 			default:
 		}
@@ -37,7 +37,7 @@ modded class MissionGameplay {
 		}
 	}
 	
-	void SyncAvailableClasses(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
+	void SyncAvailableClasses(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target )
 	{
 	    Param1<array<ref JsonClassData>> classes;
 	    if ( !ctx.Read( classes ) ) return;
@@ -50,7 +50,7 @@ modded class MissionGameplay {
 	    }
 	}
 	
-	void SyncConfig(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
+	void SyncConfig(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target )
 	{
 	    Param1<ref JsonConfig> config;
 	    if ( !ctx.Read( config ) ) return;
@@ -58,7 +58,7 @@ modded class MissionGameplay {
 	    if( type == CallType.Client )
 	    {
 	        Print( "ClassSelection - Sync Config!" );
-	        m_Config = config.param1;
+	        m_ClassSelectionConfig = config.param1;
 	    }
 	}
 	
@@ -77,12 +77,12 @@ modded class MissionGameplay {
 	
 	private ref ClassMenu GetClassMenu() {
 		if ( !m_ClassMenu ) {
-			m_ClassMenu = new ref ClassMenu();
+			m_ClassMenu = new ClassMenu();
 			m_ClassMenu.Init();
 		}
 		
 		m_ClassMenu.SetAvailableClasses(m_AvailableClasses);
-		m_ClassMenu.SetConfig(m_Config);
+		m_ClassMenu.SetConfig(m_ClassSelectionConfig);
 		m_ClassMenu.SetSelectedClass(HasSelectedClass(true));
 		
 		return m_ClassMenu;

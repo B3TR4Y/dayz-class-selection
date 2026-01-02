@@ -28,14 +28,14 @@ class ClassSelectionClass {
 		}
 	}
 	
-	void RequestSyncAvailableClasses(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target ) {
+	void RequestSyncAvailableClasses(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target ) {
 		if( type == CallType.Server )
 	    {
 			SendSyncAvailableClasses(sender);
 		}
 	}
 	
-	void RequestConfig(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target ) {
+	void RequestConfig(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target ) {
 		if( type == CallType.Server )
 	    {
 			ref JsonConfig clientConfig = new JsonConfig();
@@ -130,7 +130,7 @@ class ClassSelectionClass {
 		return true;
 	}
 	
-	void SetPlayerClass(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target ) {
+	void SetPlayerClass(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target ) {
 		Param1<JsonClassSelection> params;
 	    if ( !ctx.Read( params ) ) return;
 		
@@ -145,7 +145,7 @@ class ClassSelectionClass {
 			
 			if(PlayerCanAccessClass(selectedClass.className, sender)) {
 				if(!m_PlayerClasses.Contains(sender.GetId())) {
-					m_PlayerClasses.Set(sender.GetId(), new ref array<ref JsonClassSelection>);
+					m_PlayerClasses.Set(sender.GetId(), new array<ref JsonClassSelection>);
 				}
 				
 				if(m_PlayerClasses.Contains(sender.GetId())) {

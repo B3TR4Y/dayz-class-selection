@@ -10,16 +10,16 @@ class ClassMenu extends UIScriptedMenu {
 	bool selectedClass = false;
 	
 	void ClassMenu(){
-		m_AvailableClasses = new ref array<ref JsonClassData>;
-		m_Config = new ref JsonConfig;
-		m_DrawnWigets = new ref array<ref Widget>;
+		m_AvailableClasses = new array<ref JsonClassData>;
+		m_Config = new JsonConfig;
+		m_DrawnWigets = new array<ref Widget>;
 	}
 	
-	void SetAvailableClasses(ref array<ref JsonClassData> classes){
+	void SetAvailableClasses(array<ref JsonClassData> classes){
 		m_AvailableClasses = classes;
 	}
 	
-	void SetConfig(ref JsonConfig config){
+	void SetConfig(JsonConfig config){
 		m_Config = config;
 	}
 	
@@ -66,7 +66,7 @@ class ClassMenu extends UIScriptedMenu {
 	
 	private int GetPages() {
 		if(m_AvailableClasses.Count() <= m_classesToShow) return 1;
-		return (Math.Ceil(m_AvailableClasses.Count() / m_classesToShow);
+		return Math.Ceil(m_AvailableClasses.Count() / m_classesToShow);
 	}
 	
 	private int GetCurrentPage() {
