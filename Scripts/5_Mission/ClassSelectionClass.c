@@ -189,7 +189,7 @@ class ClassSelectionClass {
 		
 	void SetClothes(JsonClassClothing classData, PlayerBase player)
 	{
-		GetGame().ObjectDelete(player.GetHumanInventory().GetEntityInHands());
+		// Removed manual deletion of EntityInHands to prevent crash in RemoveAllItems
 		player.RemoveAllItems();
 		
 		player.GetInventory().CreateInInventory(classData.top);
