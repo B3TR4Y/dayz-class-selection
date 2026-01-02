@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modded_inputs>
+    <inputs>
+        <actions>
+            <input name="OpenClassSelect" loc="Open Class Select" />
+        </actions>
+        <sorting name="class_select" loc="CLASS SELECT">
+            <input name="OpenClassSelect" />
+        </sorting>
+    </inputs>
+    <preset>
+        <input name="OpenClassSelect">
+            <btn name="KC_COMMA" />
+        </input>
+    </preset>
+</modded_inputs>

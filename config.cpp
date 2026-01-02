@@ -26,6 +26,7 @@ class CfgMods
 		action = "https://github.com/d3xter-dev";
 		author = "D3XTER-dev";
 		authorID = "LemmingTV"; 
+		inputs = "ClassSelect/Scripts/Data/Inputs.xml";
 		version = "0.1"; 
 		extra = 0;
 		type = "mod";
