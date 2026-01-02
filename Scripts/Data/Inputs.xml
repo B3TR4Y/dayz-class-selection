@@ -10,7 +10,7 @@
     </inputs>
     <preset>
         <input name="OpenClassSelect">
-            <btn name="KC_COMMA" />
+            <btn name="kComma" />
         </input>
     </preset>
 </modded_inputs>

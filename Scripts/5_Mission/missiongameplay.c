@@ -11,20 +11,19 @@ modded class MissionGameplay {
 		GetRPCManager().AddRPC("ClassSelection", "SyncConfig", this, SingeplayerExecutionType.Client);
 	}
 	
-	override void OnKeyPress( int key ) {
-		super.OnKeyPress(key);
-	
-		switch ( key ) {
-			case ClassSelectionUtils.StringToKeyCode(m_ClassSelectionConfig.keyToOpen):
-				if(!m_ClassSelectionConfig.showClassSelectOnRespawnOnly) GetClassMenu().Toggle();
-			break;
-			default:
-		}
-	}
+	// Removed OnKeyPress as we are now using the Input System defined in Inputs.xml
 	
 	override void OnUpdate(float timeslice)
 	{
 		super.OnUpdate(timeslice);
+		
+		// Check for the custom input defined in Inputs.xml
+		if (GetGame().GetInput().LocalPress("OpenClassSelect", false)) {
+			// Ensure config is loaded and we are not in "Respawn Only" mode
+			if (m_ClassSelectionConfig && !m_ClassSelectionConfig.showClassSelectOnRespawnOnly) {
+				GetClassMenu().Toggle();
+			}
+		}
 		
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
 		if(m_Initialized  && !IsPaused() && player && player.IsPlayerLoaded() && !IsPlayerRespawning() && player.IsAlive()) {
