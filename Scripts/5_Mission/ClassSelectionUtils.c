@@ -1,3 +1,7 @@
+// Typedefs to help the compiler with templated types
+typedef array<ref JsonClassItem> JsonClassItemArray;
+typedef array<ref JsonClassSelection> JsonClassSelectionArray;
+
 class ClassSelectionUtils {
 	static const string cfgPath = "$profile:";
 	static const string cfgMainDir = "ClassSelection\\";
@@ -12,7 +16,7 @@ class ClassSelectionUtils {
 	}
 	
 	void RefreshConfig() {
-		JsonFileLoader<JsonConfig>.JsonLoadFile(cfgPath + "ClassSelection\\Config.json", config);
+		JsonFileLoader<ref JsonConfig>.JsonLoadFile(cfgPath + "ClassSelection\\Config.json", config);
 	}
 	
 	void CheckVersion() {
@@ -27,15 +31,6 @@ class ClassSelectionUtils {
 				Error(error);
 				GetGame().RequestExit(IDC_MAIN_QUIT);
 			}
-			
-			/*
-			if(config.showClassSelectOnRespawn &&  config.giveWeaponsAfterDeath) {
-				error = "The Class-Selection mod doesn't support showClassSelectOnRespawn and giveWeaponsAfterDeath on the same time, decide what to use and change the config!";
-				Print(error); 
-				Debug.LogError(error);
-				Error(error);
-				GetGame().RequestExit(IDC_MAIN_QUIT);
-			}*/
 		}
 		else {
 			config = SaveConfigExample();
@@ -53,9 +48,9 @@ class ClassSelectionUtils {
 		if (!FileExist(cfgPath + "ClassSelection\\GeneralItems.json")) SaveItemsExampleJSON(cfgPath + "ClassSelection\\");
 	}
 	
-	static ref array<ref JsonClassItem> LoadGeneralItems() {
-		ref array<ref JsonClassItem> items = new array<ref JsonClassItem>;
-		JsonFileLoader<array<ref JsonClassItem>>.JsonLoadFile(cfgPath + "ClassSelection\\GeneralItems.json", items);
+	static ref JsonClassItemArray LoadGeneralItems() {
+		ref JsonClassItemArray items = new JsonClassItemArray;
+		JsonFileLoader<JsonClassItemArray>.JsonLoadFile(cfgPath + "ClassSelection\\GeneralItems.json", items);
 		return items;
 	}
 	
@@ -109,14 +104,14 @@ class ClassSelectionUtils {
 	}
 	
 	static void SaveItemsExampleJSON(string path) {
-		array<ref JsonClassItem> example = new array<ref JsonClassItem>;
+		JsonClassItemArray example = new JsonClassItemArray;
 		
 		example.Insert(new JsonClassItem("Rag", 6, {}, null, {}));
 		example.Insert(new JsonClassItem("TacticalBaconCan", 5, {}, null, {}));
 		example.Insert(new JsonClassItem("WaterBottle", 0, {}, null, {}));
 		example.Insert(new JsonClassItem("HuntingKnife", 0, {}, null, {}));
 		
-		JsonFileLoader<array<ref JsonClassItem>>.JsonSaveFile(path + "GeneralItems.json", example);
+		JsonFileLoader<JsonClassItemArray>.JsonSaveFile(path + "GeneralItems.json", example);
 	}
 	
 	static void SaveClassExampleJSON(string path) {
@@ -168,9 +163,9 @@ class ClassSelectionUtils {
 		JsonFileLoader<JsonClassData>.JsonSaveFile(path + "ClassDataExample_"+ version +".json", example);
 	}
 	
-	static ref array<ref JsonClassSelection> LoadPlayerData(PlayerIdentity identity) {
-		ref array<ref JsonClassSelection> playerClasses = new array<ref JsonClassSelection>;
-	    JsonFileLoader<array<ref JsonClassSelection>>.JsonLoadFile(cfgPath + cfgPlayerSaves + identity.GetId() + ".json", playerClasses);
+	static ref JsonClassSelectionArray LoadPlayerData(PlayerIdentity identity) {
+		ref JsonClassSelectionArray playerClasses = new JsonClassSelectionArray;
+	    JsonFileLoader<JsonClassSelectionArray>.JsonLoadFile(cfgPath + cfgPlayerSaves + identity.GetId() + ".json", playerClasses);
 		return playerClasses;
 	}
 	
