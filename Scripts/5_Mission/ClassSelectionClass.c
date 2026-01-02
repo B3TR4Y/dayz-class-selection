@@ -189,9 +189,31 @@ class ClassSelectionClass {
 		
 	void SetClothes(JsonClassClothing classData, PlayerBase player)
 	{
-		// FIX: Removed GetGame().ObjectDelete() to prevent Runtime Error in RemoveAllItems
-		player.RemoveAllItems();
+		// FIX: Replaced RemoveAllItems() with manual deletion loop to fix "LocalDestroyEntity: No inventory location" crash
 		
+		// 1. Delete item in hands
+		EntityAI itemInHands = player.GetHumanInventory().GetEntityInHands();
+		if (itemInHands) {
+			GetGame().ObjectDelete(itemInHands);
+		}
+
+		// 2. Collect and delete all attachments (Clothes, Vest, Backpack, etc.)
+		array<EntityAI> currentAttachments = new array<EntityAI>;
+		for (int i = 0; i < player.GetInventory().GetAttachmentSlotsCount(); i++)
+		{
+			int slotId = player.GetInventory().GetAttachmentSlotId(i);
+			EntityAI attachment = player.GetInventory().FindAttachment(slotId);
+			if (attachment)
+			{
+				currentAttachments.Insert(attachment);
+			}
+		}
+
+		foreach(EntityAI att : currentAttachments) {
+			if (att) GetGame().ObjectDelete(att);
+		}
+
+		// 3. Create new items
 		player.GetInventory().CreateInInventory(classData.top);
 		player.GetInventory().CreateInInventory(classData.pants);
 		player.GetInventory().CreateInInventory(classData.shoes);
