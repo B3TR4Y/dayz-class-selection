@@ -1,5 +1,4 @@
-// Typedefs to help the compiler with templated types
-typedef array<ref JsonClassItem> JsonClassItemArray;
+// Typedef to help the compiler (JsonClassItemArray removed as it is in JsonClassData.c)
 typedef array<ref JsonClassSelection> JsonClassSelectionArray;
 
 class ClassSelectionUtils {
